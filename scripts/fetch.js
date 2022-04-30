@@ -1,8 +1,9 @@
-let searchImages =async (api,value)=>{
+let searchImages =async (api,value,sort,filter)=>{
     let query=document.getElementById("query").value;
+
     try{
         let res= await fetch(
-            `https://api.unsplash.com/search/photos/?query=${value}&per_page=20&client_id=${api}`);
+            `https://api.unsplash.com/search/photos/?query=${value}&per_page=20&order_by=${sort}&orientation=${filter}&client_id=${api}`);
 
         let data=await res.json();
         // console.log(data)
@@ -24,5 +25,6 @@ let append =(data,container)=>{
         container.append(div)
     })
 }
+
 
 export {searchImages ,append}

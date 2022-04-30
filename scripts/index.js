@@ -8,17 +8,51 @@ const api="H45cD7zFEnXv0gs4QtDXZ86imf-7cX3quF4VCBhwrBo";
 import { navbar } from "../components/navbar.js";
 import { searchImages, append } from "./fetch.js"
 let n=document.getElementById("navbar");
+
 n.innerHTML=navbar();
+let sortt="latest";
+let filter="landscape";
     let search =(e)=>{
         if(e.key==="Enter"){
-            let value=document.getElementById("query").value
-            searchImages(api,value).then((res)=>{
+            var value=document.getElementById("query").value
+
+            searchImages(api,value,sortt,filter).then((res)=>{
                 console.log(res);
                 let container=document.getElementById("container");
                 container.innerHTML=null;
                 append(res.results,container)
 
             })
+        }
+        let fil=document.getElementById("filter")
+
+        fil.addEventListener("change",filt_)
+        function filt_(){
+            filter=fil.value;
+            searchImages(api,value,sortt,filter).then((res)=>{
+                console.log(res);
+                let container=document.getElementById("container");
+                container.innerHTML=null;
+                append(res.results,container)
+
+            })
+            console.log(filter)
+
+
+        }
+        let sort=document.getElementById("sort")
+
+        sort.addEventListener("change",sSort)
+        function sSort(){
+            sortt=sort.value;
+            searchImages(api,value,sortt,filter).then((res)=>{
+                console.log(res);
+                let container=document.getElementById("container");
+                container.innerHTML=null;
+                append(res.results,container)
+
+            })
+
         }
     };
     document.getElementById("query").addEventListener("keydown",search)
@@ -41,11 +75,14 @@ for(let el of categories){
 }
 function cSearch(){
     // console.log(this.id)
-    searchImages(api,this.id).then((res)=>{
+   
+    searchImages(api,this.id,sortt,filter).then((res)=>{
         console.log(res);
         let container=document.getElementById("container");
         container.innerHTML=null;
         append(res.results,container)
 
-    })
+    });
+
 }
+
